@@ -40,9 +40,9 @@
 }
 
 .drone-number {
-  font-size: 1.4rem;
+  font-size: 1.0rem;
   font-weight: bold;
-  margin-top: 2rem;
+  margin-top: 1rem;
   margin-left: 0.2rem;
   align-self: flex-start;
 }
@@ -51,7 +51,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  gap: 3rem; 
+  gap: 1rem; 
   width: 100%;
 }
 
@@ -66,8 +66,8 @@
 }
 
 .icon {
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
@@ -78,7 +78,7 @@
 
 .icon-text {
   text-align: center;
-  font-size: 1rem;
+  font-size: 0.8rem;
   margin-top: 2px;
   color: #4a4a4a;
   white-space: nowrap;
