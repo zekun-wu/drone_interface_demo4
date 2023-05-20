@@ -78,7 +78,7 @@ const DroneBlock = ({ droneData, droneNumber, highlightStatus, isFrozen, latestD
     const iconValues = {
 
       rotor: () => {
-        const value = latestData.rotor === 1 ? 'working' : 'off';
+        const value = latestData.zone === 1 ? 'working' : (latestData.zone === 0 ? 'off' : 'unknown');
         const highlight = latestData.rotor === 0 ? highlightStatus : null;
         return { value, highlight };
       },
@@ -138,7 +138,7 @@ const DroneBlock = ({ droneData, droneNumber, highlightStatus, isFrozen, latestD
       },
       zone: () => {
         // const icon = zoneIcons[latestData.zone] || { value: 'unknown', highlight: latestData.nofly === 0 ? highlightStatus : null };
-        const value = latestData.zone === 1 ? 'fly zone' : 'no-fly';
+        const value = latestData.zone === 1 ? 'fly zone' : (latestData.zone === 0 ? 'no-fly' : 'unknown');
         const highlight = latestData.zone === 0 ? highlightStatus : null;        
         return { value, highlight };
       },

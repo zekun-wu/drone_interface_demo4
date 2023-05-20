@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, memo } from "react";
+import { Login } from './components/Login';
 import Questionnaire from "./components/Questionnaire";
 import DroneMonitor from "./components/DroneMonitor";
 import Calibration from "./components/Calibration";
@@ -6,8 +7,11 @@ import End from "./components/End";
 import "./App.css";
 
 function App() {
+
+  const [loggedIn, setLoggedIn] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [sceneCounter, setSceneCounter] = useState(1);
+  const [interval, setIntervalCount] = useState(1);
   const [results, setResults] = useState([]);
 
   const [taskStarted, setTaskStarted] = useState(false);
@@ -21,6 +25,15 @@ function App() {
   const [allDronesCurrentData, setAllDronesCurrentData] = useState([]);
 
   const [spacebarTimestamps, setSpacebarTimestamps] = useState([]);
+
+  const final_task = 1
+
+  const handleLogin = (userData) => {
+    // Save userData to results
+    setResults((prevResults) => [...prevResults, userData]);
+    // Set loggedIn state to true
+    setLoggedIn(true);
+  };
 
 
   const loadAllDronesData = async () => {
@@ -72,25 +85,24 @@ function App() {
         const updatedDronesData = allDronesCurrentData.map((data, index) => {
           return droneData[index].timestamps[newIndex];
         });
-        setAllDronesCurrentData(updatedDronesData);
 
+        setAllDronesCurrentData(updatedDronesData);
+        
         if (updatedDronesData[0]['question'] === 1) {
           setShowQuestionnaire(true);
+          // setShowQuestionnaire(false);
           clearInterval(timer);
           return prevIndex + 1;
         }
 
-        if(allDronesCurrentData[0]['end']===1){
-          if (endQuestionnaire) {
-            if (sceneCounter === 6) {
-              setallTaskEnded(true);
-            } else {
-              setTaskStarted(false);
-              setCalibration(true);
-            }
-            clearInterval(timer);
-            setEndQuestionnaire(false);
+        if (updatedDronesData[0]['end'] === 1) {
+          if (sceneCounter === final_task) {
+            setallTaskEnded(true); // Transition to End page
+          } else {
+            setTaskStarted(false);
+            setCalibration(true); // Transition to Calibration page
           }
+          clearInterval(timer);
           return prevIndex;
         }
         return newIndex;
@@ -121,55 +133,87 @@ function App() {
   };
 
   const handleQuestionnaireSubmit = (currentResult) => {
+    console.log('currentResult',currentResult)
     setResults((prevResults) => {
       const updatedResults = [...prevResults, currentResult];
       return updatedResults;
     });
     setShowQuestionnaire(false);
   
-    if (allDronesCurrentData[0]['end'] === 1) {
-      if (sceneCounter === 6) {
+    if (allDronesCurrentData[0]['end']===1) {
+      if (sceneCounter === final_task) {
         setallTaskEnded(true);
       } else {
         setEndQuestionnaire(true);
-        setTaskStarted(false);
-        setCalibration(true);
       }
     }
   };
 
+  useEffect(() => {
+    if (taskStarted && currentIndex !== 0 && (currentIndex+1) % 360 === 0) {
+      setIntervalCount(prevInterval => prevInterval + 1);
+    }
+  }, [taskStarted, currentIndex]);
+
+  useEffect(() => {
+    setIntervalCount(1); // reset interval count when scene changes
+  }, [sceneCounter]);
+
+  // useEffect(() => {
+  //   const notifyServer = async (url, taskState, scene, interval, currentIndex, showQuestionnaire, calibration, allTaskEnded) => {
+  //     await fetch(url, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify({taskStarted: taskState, scene, interval, currentIndex, showQuestionnaire, calibration, allTaskEnded })
+  //     })
+  //     .then(response => response.json())
+  //     .then(data => console.log(data))
+  //     .catch((error) => {
+  //       console.error('Error:', error);
+  //     });
+  //   };
+  
+  //   notifyServer('http://localhost:5000', taskStarted, sceneCounter, interval, currentIndex, showQuestionnaire, calibration, allTaskEnded);
+  
+  // }, [currentIndex]);
+
   return (
-    <div className="App">
-      <div className="app_container">
-        {calibration ? (
-          <Calibration />
-        ) : showQuestionnaire ? (
-          <Questionnaire
-            ref={questionnaireRef}
-            onSubmit={handleQuestionnaireSubmit}
-            allDronesCurrentData={allDronesCurrentData}
-          />
-        ) : allTaskEnded ? (
-          <End results={results}  spacebarTimestamps={spacebarTimestamps}/>
-        ) : (
-          <DroneMonitor
-            key={sceneCounter}
-            taskStarted={taskStarted}
-            sceneCounter={sceneCounter}
-            currentIndex={currentIndex}
-            currentData={allDronesCurrentData}
-            droneData={droneData}
-            setSpacebarTimestamps={setSpacebarTimestamps}
-          />
-        )}
+  <div className="App">
+    <div className={loggedIn && !showQuestionnaire ? "app_container no-scroll" : "app_container"}>
+      {!loggedIn ? (
+        <Login onLogin={handleLogin} />
+      ) :
+        <>
+          {calibration ? (
+            <Calibration />
+          ) : showQuestionnaire ? (
+            <Questionnaire
+              ref={questionnaireRef}
+              onSubmit={handleQuestionnaireSubmit}
+              sceneCounter={sceneCounter}
+              allDronesCurrentData={allDronesCurrentData}
+              droneData={droneData}
+            />
+          ) : allTaskEnded ? (
+            <End results={results}  spacebarTimestamps={spacebarTimestamps}/>
+          ) : (
+            <DroneMonitor
+              key={sceneCounter}
+              taskStarted={taskStarted}
+              sceneCounter={sceneCounter}
+              currentIndex={currentIndex}
+              currentData={allDronesCurrentData}
+              droneData={droneData}
+              setSpacebarTimestamps={setSpacebarTimestamps}
+            />
+          )}
         <div className="content-wrapper">
-          <h2>Current Task: {sceneCounter}</h2>
+          <h3>Current Task: {sceneCounter}</h3>
           <div className="button-container">
             {showQuestionnaire ? (
-              <button
-                type="submit"
-                onClick={() => questionnaireRef.current.handleSubmit()}
-              >
+              <button type="submit" onClick={() => questionnaireRef.current && questionnaireRef.current.handleSubmit()}>
                 Submit and Proceed
               </button>
             ) : calibration ? (
@@ -181,8 +225,10 @@ function App() {
             )}
           </div>
         </div>
-      </div>
+        </>
+      }
     </div>
+  </div>
   );
 }
 
