@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect, memo } from "react";
-import { Login } from './components/Login';
+import {Login} from "./components/Login";
 import Questionnaire from "./components/Questionnaire";
 import DroneMonitor from "./components/DroneMonitor";
 import Calibration from "./components/Calibration";
 import End from "./components/End";
 import "./App.css";
+import html2canvas from 'html2canvas';
+// import ScreenRecorder from "./components/ScreenRecorder";
 
 function App() {
 
@@ -178,6 +180,11 @@ function App() {
   //   notifyServer('http://localhost:5000', taskStarted, sceneCounter, interval, currentIndex, showQuestionnaire, calibration, allTaskEnded);
   
   // }, [currentIndex]);
+
+  useEffect(() => {
+    // Send a message to the extension
+    window.postMessage({ type: "CAPTURE_SCREENSHOT", payload: { currentIndex } }, "*");
+}, [currentIndex]);
 
   return (
   <div className="App">
