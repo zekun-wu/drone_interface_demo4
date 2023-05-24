@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/drone_interface_demo4/static/css/main.432c4587.css",
-    "main.js": "/drone_interface_demo4/static/js/main.f60d29c8.js",
+    "main.js": "/drone_interface_demo4/static/js/main.dbae89e2.js",
     "static/js/787.3d6383ce.chunk.js": "/drone_interface_demo4/static/js/787.3d6383ce.chunk.js",
     "static/media/speed.png": "/drone_interface_demo4/static/media/speed.9f4df3dc66eb7a8d5017.png",
     "static/media/no_fly.png": "/drone_interface_demo4/static/media/no_fly.22ea68d3567cefe6bfd5.png",
@@ -13,11 +13,11 @@
     "static/media/rain.png": "/drone_interface_demo4/static/media/rain.7aaa93f93347ec18c69c.png",
     "index.html": "/drone_interface_demo4/index.html",
     "main.432c4587.css.map": "/drone_interface_demo4/static/css/main.432c4587.css.map",
-    "main.f60d29c8.js.map": "/drone_interface_demo4/static/js/main.f60d29c8.js.map",
+    "main.dbae89e2.js.map": "/drone_interface_demo4/static/js/main.dbae89e2.js.map",
     "787.3d6383ce.chunk.js.map": "/drone_interface_demo4/static/js/787.3d6383ce.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.432c4587.css",
-    "static/js/main.f60d29c8.js"
+    "static/js/main.dbae89e2.js"
   ]
 }
