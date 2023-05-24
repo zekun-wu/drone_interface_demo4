@@ -2,6 +2,12 @@
   overflow: hidden;
 } */
 
+  body.no-scroll {
+    overflow: hidden;
+    height: 100%;
+  }
+
+
 .button-container {
   display: flex;
   align-items: center;
@@ -54,9 +60,14 @@ button:hover {
   flex-direction: column;
   align-items: center;
   height: 100vh;
+  max-height: 100vh;
   width: 100%;
   justify-content: flex-start; /* Change from space-between to flex-start */
   padding-top: 20px;
+}
+
+.app_container.no-scroll {
+  overflow: hidden;
 }
 
 .form_container {

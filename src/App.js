@@ -186,9 +186,18 @@ function App() {
     window.postMessage({ type: "CAPTURE_SCREENSHOT", payload: { currentIndex } }, "*");
 }, [currentIndex]);
 
+  useEffect(() => {
+    // Add the 'no-scroll' class to the body when the component is mounted
+    document.body.classList.add('no-scroll');
+
+    // Return a cleanup function that removes the 'no-scroll' class when the component is unmounted
+    return () => {
+      document.body.classList.remove('no-scroll');
+    };
+  }, []);
+
   return (
   <div className="App">
-    <div className={loggedIn && !showQuestionnaire ? "app_container no-scroll" : "app_container"}>
       {!loggedIn ? (
         <Login onLogin={handleLogin} />
       ) :
@@ -234,7 +243,6 @@ function App() {
         </div>
         </>
       }
-    </div>
   </div>
   );
 }

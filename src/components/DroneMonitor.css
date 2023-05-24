@@ -12,17 +12,21 @@
   grid-template-rows: repeat(2, 1fr);
   gap: 5.0rem;
   width: 50%;
-  height: 90%;
+  height: 85%;
   padding: 1rem;
   margin-right: 1rem;
   margin-left: 1rem;
+  margin-top: 2rem;
   margin-bottom: 2rem;
 }
 
 .map-container {
   width: 50%;
-  height: 90%;
-  margin: 1.0rem;
+  height: 85%;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
 }
 
 .drone-block {
@@ -40,10 +44,10 @@
 }
 
 .drone-number {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: bold;
   margin-top: 1rem;
-  margin-left: 1.4rem;
+  margin-left: 1rem;
   align-self: flex-start;
 }
 
@@ -66,8 +70,8 @@
 }
 
 .icon {
-  width: 36px;
-  height: 36px;
+  width: 48px;
+  height: 48px;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
@@ -78,7 +82,7 @@
 
 .icon-text {
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin-top: 2px;
   color: #4a4a4a;
   white-space: nowrap;

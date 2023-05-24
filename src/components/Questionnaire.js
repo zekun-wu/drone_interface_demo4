@@ -13,19 +13,19 @@ const only_non_critical_questions = [
     subquestions: [
       {
         drone: 'Drone 1',
-        options: ['<70%', '70-80%', '80-90%', '>90%', "I don’t know"],
+        options: ['<10%', '10-40%', '40-80%', '>80%', "I don’t know"],
       },
       {
         drone: 'Drone 2',
-        options: ['<70%', '70-80%', '80-90%', '>90%', "I don’t know"],
+        options: ['<10%', '10-40%', '40-80%', '>80%', "I don’t know"],
       },
       {
         drone: 'Drone 3',
-        options: ['<70%', '70-80%', '80-90%', '>90%', "I don’t know"],
+        options: ['<10%', '10-40%', '40-80%', '>80%', "I don’t know"],
       },
       {
         drone: 'Drone 4',
-        options: ['<70%', '70-80%', '80-90%', '>90%', "I don’t know"],
+        options: ['<10%', '10-40%', '40-80%', '>80%', "I don’t know"],
       }
     ],
   },
@@ -84,11 +84,11 @@ const buildNonCriticalQuestions = (only_non_critical_questions, allDronesCurrent
         const droneBattery = allDronesCurrentData[index]['battery']*100;
         let optionIndex;
 
-        if (droneBattery < 70) {
+        if (droneBattery < 10) {
           optionIndex = 0;
-        } else if (droneBattery >= 70 && droneBattery < 80) {
+        } else if (droneBattery >= 10 && droneBattery < 40) {
           optionIndex = 1;
-        } else if (droneBattery >= 80 && droneBattery < 90) {
+        } else if (droneBattery >= 40 && droneBattery < 80) {
           optionIndex = 2;
         } else {
           optionIndex = 3;
