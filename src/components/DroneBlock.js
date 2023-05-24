@@ -78,7 +78,7 @@ const DroneBlock = ({ droneData, droneNumber, highlightStatus, isFrozen, latestD
     const iconValues = {
 
       rotor: () => {
-        const value = latestData.zone === 1 ? 'working' : (latestData.zone === 0 ? 'off' : 'unknown');
+        const value = latestData.rotor === 1 ? 'working' : (latestData.rotor === 0 ? 'off' : 'unknown');
         const highlight = latestData.rotor === 0 ? highlightStatus : null;
         return { value, highlight };
       },
@@ -96,7 +96,7 @@ const DroneBlock = ({ droneData, droneNumber, highlightStatus, isFrozen, latestD
 
       battery: () => {
         const value = latestData.battery ? (100 * latestData.battery).toFixed(0) + '%' : 'unknown';
-        const highlight = (100 * latestData.battery).toFixed(0)<=10 ? highlightStatus : null;
+        const highlight = (100 * latestData.battery).toFixed(0)<10 ? highlightStatus : null;
         return { value, highlight };
       },
 
